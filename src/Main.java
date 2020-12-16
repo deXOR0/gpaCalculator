@@ -67,10 +67,11 @@ public class Main {
 				} 
 				scan.nextLine();
 			} while (thisSks < 1);
-			totalScore += (sksFinder(thisScore)) * ((double)thisSks / totalSks);
+			totalScore += ((sksFinder(thisScore)) * thisSks);
 			System.out.println("This score is " + (sksFinder(thisScore)));
 		}
 		System.out.println();
+		totalScore /= totalSks;
 		System.out.println("Your total score is " + totalScore);
 		System.out.println();
 		System.out.println("Press enter to continue...");
@@ -82,6 +83,7 @@ public class Main {
 		clear();
 		int semester = -1;
 		double totalScore = 0;
+		int sksKumulatif = 0;
 		do {
 			System.out.print("Input the number of semester you have passed : ");
 			try {
@@ -90,10 +92,11 @@ public class Main {
 				// TODO: handle exception
 			}
 		}while (semester < 1);
+		
 		for (int i = 1; i <= semester; i++) {
 			double thisSemester = -1;
 			do {
-				System.out.print("Input " + i + " semester IPS : ");
+				System.out.print("Input semester " + i + " IPS : ");
 				try {
 					thisSemester = scan.nextDouble();
 				} catch (Exception e) {
@@ -101,9 +104,19 @@ public class Main {
 				}
 				scan.nextLine();
 			}while (thisSemester < 0);
-			totalScore += thisSemester;
+			int semesterSKS = -1;
+			do {
+				System.out.print("Input semester " + i + " SKS : ");
+				try {
+					semesterSKS = scan.nextInt();
+				} catch (Exception e) {
+					// TODO: handle exception
+				}
+				scan.nextLine();
+			}while (semesterSKS < 1);
+			totalScore = ((totalScore * sksKumulatif) + (thisSemester * semesterSKS)) / (sksKumulatif + semesterSKS);
+			sksKumulatif += semesterSKS;
 		}
-		totalScore /= semester;
 		System.out.println();
 		System.out.printf("Your total IPK is : %.2f\n", totalScore);
 		System.out.println();
